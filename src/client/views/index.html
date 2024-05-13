@@ -1,47 +1,65 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="UTF-8">
-  <title>Traveloka Application</title>
-  <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="style.css"> -->
-</head>
-
-<body>
-  <div id="app">
-    <div class="holder headline">
-      Traveloka Planner
-    </div>
-    <div class="holder city">
-      <label for="city">Enter a place</label>
-      <input type="text" id="city" placeholder="enter place here">
-    </div>
-    <div class="holder departing">
-      <label for="departing">Pick the depart date</label>
-      <input type="date" id="departing">
-    </div>
-    <div class="remain days">
-      <div id="remainDays"></div>
-    </div>
-    <button id="generate" type="submit"> Generate </button>
-
-    <!-- <div class="holder feel"> -->
-      <!-- <label for="feelings">How are you feeling today?</label>
-      <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea> -->
-      <!-- <button id="generate" type="submit"> Generate </button> -->
-    <!-- </div> -->
-    <div class="holder entry">
-      <div class="title">Most Recent Entry</div>
-      <div id="entryHolder">
-        <div id="lat"></div>
-        <div id="long"></div>
-        <div id="country"></div>
+  <head>
+    <meta charset="UTF-8">
+    <title>Traveloka Application</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="holder headline">
+        Traveloka Planner
       </div>
-    </div>
-  </div>
-  <!-- <script src="app.js" type="text/javascript"></script> -->
+    </header>
 
-</body>
+    <!-- Input Section-->
+    <section class = "input-form">
+      <!-- Destination Input-->
+      <div class="holder destination">
+        <label for="destination">Enter a place</label>
+        <input type="text" id="destination" placeholder="enter destination here">
+      </div>
 
+      <!-- Depart Datetime Inpur-->
+      <div class="holder departDate">
+        <label for="departDate">Pick the depart date</label>
+        <input type="date" id="departDate">
+      </div>
+
+      <!-- Generate button-->
+      <button id="generate" type="button"> Generate </button>
+    </section>
+
+    <!-- Output Section-->
+    <section class = "output-form">
+      <div class="info-area">
+        <!--Geo info-->
+        <div class="geo">
+          <div id = "output-destination"></div>
+          <div id = "output-country"></div>
+        </div>
+
+        <!--Depart Datetime-->
+        <div class="depart">
+          <div id="output-depart-date"></div>
+        </div>
+
+        <!-- Forecast Weather -->
+        <div class="weather">
+          <div id = "weather-forecast"></div>
+        </div>
+
+        <!-- Image -->
+        <img id="output-image"></img>
+      </div>
+      <div class="btn-area">
+        <!--Save button-->
+        <button id="save-btn">save trip</button>
+
+        <!--Remove button-->
+        <button id="remove-btn">remove trip</button>
+      </div>
+    </section>
+  </body>
 </html>

@@ -1,42 +1,55 @@
-const dotenv = require('dotenv')
-dotenv.config();
-// Setup empty JS object to act as endpoint for all routes
-const projectData = {};
-
 // Require Express to run server and routes
 const express = require('express');
+const dotenv = require('dotenv')
+dotenv.config();
 
 // Start up an instance of app
 const app = express();
+const cors = require('cors');
 
 /* Middleware*/
-//Here we are configuring express to use body-parser as middle-ware.
+//Here we are configuring express middle-ware.
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// Cors for cross origin allowance
-const cors = require('cors');
 app.use(cors());
-
-// Initialize the main project folder
 app.use(express.static('dist'));
-
 
 // Setup Server
 const port = process.env.PORT;
+const geoUserName = process.env.GEO_USERNAME;
+const weatherKey = process.env.WEATHER_KEY;
+const pixaKey = process.env.PIXA_KEY
 
 //get request
-app.get('/all', (req, res) => {
-    res.send(projectData);
-  });
+app.get('/', (req, res) => {
+  res.sendFile('dist/index.html')
+});
 
 //post request
-app.post('/data', (req, res)=>{
-  let newData = req.body;
-  projectData.temperature = newData.temperature;
-  projectData.date = newData.date;
-  projectData.userResponse = newData.userResponse;
+app.post('/info', async(req,res) => {
+  try{
+    const destination  = req.body.destination;
+    const geoAPI = `http://api.geonames.org/search?type=json&maxRows=1&username=${geoUserName}&q=${destination}`;
+    const geoResponse = await fetchAPI(geoAPI)
+
+    const weatherAPI = `https://api.weatherbit.io/v2.0/forecast/daily?&key=${weatherKey}&lat=${geoResponse.geonames[0].lat}&lon=${geoResponse.geonames[0].lng}`;
+    const weatherResponse = await fetchAPI(weatherAPI);
+
+    const pixaAPI = `https://pixabay.com/api/?key=${pixaKey}&image_type=photo&per_page=3&pretty=true&q=${destination}`;
+    const pixaResponse = await fetchAPI(pixaAPI);
+
+    console.log('Ouput Server:',{geoResponse,weatherResponse,pixaResponse})
+    res.send({geoResponse,weatherResponse,pixaResponse});
+
+  }catch(error){
+    console.log('errorRetrieveData', error);
+  }
 })
+
+const fetchAPI = async (url) => {
+  const response = await fetch(url);
+  return await response.json();
+}
 
 function listening(){
   console.log(`App listening on port ${port}`);
