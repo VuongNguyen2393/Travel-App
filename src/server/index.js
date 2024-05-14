@@ -31,6 +31,10 @@ app.post('/info', async(req,res) => {
     const destination  = req.body.destination;
     const geoAPI = `http://api.geonames.org/search?type=json&maxRows=1&username=${geoUserName}&q=${destination}`;
     const geoResponse = await fetchAPI(geoAPI)
+    if(geoResponse.totalResultsCount==0){
+      res.send({geoResponse});
+      return;
+    }
 
     const weatherAPI = `https://api.weatherbit.io/v2.0/forecast/daily?&key=${weatherKey}&lat=${geoResponse.geonames[0].lat}&lon=${geoResponse.geonames[0].lng}`;
     const weatherResponse = await fetchAPI(weatherAPI);
@@ -38,7 +42,6 @@ app.post('/info', async(req,res) => {
     const pixaAPI = `https://pixabay.com/api/?key=${pixaKey}&image_type=photo&per_page=3&pretty=true&q=${destination}`;
     const pixaResponse = await fetchAPI(pixaAPI);
 
-    console.log('Ouput Server:',{geoResponse,weatherResponse,pixaResponse})
     res.send({geoResponse,weatherResponse,pixaResponse});
 
   }catch(error){

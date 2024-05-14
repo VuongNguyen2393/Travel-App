@@ -10,6 +10,12 @@ const getRemainDays = (inputDate) => {
     return (targetDay - today)/(3600000*24);
 }
 
+const getDiffDays = (departDate, returnDate) =>{
+    const departDatetime = new Date(new Date(departDate).toDateString());
+    const returnDatetime = new Date(new Date(returnDate).toDateString());
+    return (returnDatetime - departDatetime)/(3600000*24);
+}
+
 const formatDate = (inputDate) => {
     const targetDay = new Date(new Date(inputDate).toDateString());
     const year = targetDay.getFullYear();
@@ -18,4 +24,4 @@ const formatDate = (inputDate) => {
     return `${year}-${month}-${day}`;
 }
 
-export{isPastDay, getRemainDays, formatDate}
+export{isPastDay, getRemainDays, formatDate, getDiffDays}

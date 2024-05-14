@@ -9,57 +9,74 @@
     <!-- Header -->
     <header>
       <div class="holder headline">
-        Traveloka Planner
+        Traveloka
       </div>
     </header>
 
     <!-- Input Section-->
-    <section class = "input-form">
+    <section class="input-form">
       <!-- Destination Input-->
-      <div class="holder destination">
-        <label for="destination">Enter a place</label>
-        <input type="text" id="destination" placeholder="enter destination here">
-      </div>
+      <div id="inputOnly">
+        <div class="destination-holder">
+          <label for="destination">Enter a place</label>
+          <input type="text" id="destination" placeholder="enter destination here">
+        </div>
+      
+        <!-- Depart Datetime Input-->
+        <div class="departDate-holder">
+          <label for="departDate">Pick the depart date</label>
+          <input type="date" id="departDate">
+        </div>
 
-      <!-- Depart Datetime Inpur-->
-      <div class="holder departDate">
-        <label for="departDate">Pick the depart date</label>
-        <input type="date" id="departDate">
+        <!-- Return Datetime Input-->
+        <div class="returnDate-holder">
+          <label for="returnDate">Pick the return date</label>
+          <input type="date" id="returnDate">
+        </div>
       </div>
-
-      <!-- Generate button-->
-      <button id="generate" type="button"> Generate </button>
+        <!-- Generate button -->
+      <button id="generate" type="button">Generate</button>
     </section>
 
     <!-- Output Section-->
     <section class = "output-form">
+      <div class="img-area">
+        <!-- Image -->
+        <img id="output-image"></img>
+      </div>
       <div class="info-area">
         <!--Geo info-->
-        <div class="geo">
+        <div class="header-output">
           <div id = "output-destination"></div>
-          <div id = "output-country"></div>
         </div>
 
-        <!--Depart Datetime-->
-        <div class="depart">
+         <!--Depart Datetime-->
+         <div class="header-output">
           <div id="output-depart-date"></div>
-        </div>
+        </div> 
 
+        <!--Trip duration-->
+        <div class="time-info">
+          <div id="output-trip-remain"></div>
+          <div id="output-trip-duration"></div>
+        </div>
         <!-- Forecast Weather -->
         <div class="weather">
           <div id = "weather-forecast"></div>
         </div>
-
-        <!-- Image -->
-        <img id="output-image"></img>
-      </div>
-      <div class="btn-area">
-        <!--Save button-->
-        <button id="save-btn">save trip</button>
-
-        <!--Remove button-->
-        <button id="remove-btn">remove trip</button>
       </div>
     </section>
+    <footer>
+      <div class="footer-wrapper">
+              <p>Ⓒ 2024 Developed by VuongND9</p>
+      </div>
+    </footer>
+     <script>
+      if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/service-worker.js');
+          });
+      }
+    </script>
   </body>
 </html>

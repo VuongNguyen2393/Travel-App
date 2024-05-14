@@ -1,5 +1,5 @@
 
-const { isPastDay, getRemainDays, formatDate } = require("./dateHandler");
+const { isPastDay, getRemainDays, formatDate, getDiffDays } = require("./dateHandler");
 
 const serverURL = 'http://localhost:8080';
 
@@ -10,10 +10,17 @@ async function handleCreateTrip(event){
     event.preventDefault();
     let destinationInput = document.getElementById('destination').value;
     let departDateInput = document.getElementById('departDate').value;
+    let returnDateInput = document.getElementById('returnDate').value;
+
 
     //validate empty fields
-    if(departDateInput==='' || destinationInput === ''){
+    if(returnDateInput==='' || departDateInput==='' || destinationInput === ''){
         alert('Destination and Depart Date are required!!!');
+        return;
+    }
+
+    if(getDiffDays(departDateInput, returnDateInput)<0){
+        alert("Return date can't be the past of depart date");
         return;
     }
 
@@ -27,7 +34,11 @@ async function handleCreateTrip(event){
     await sendDataToServer(serverURL + '/info', {destination: destinationInput})
     .then(res => res.json())
     .then((res)=>{
-        updateUI(res, departDateInput);
+        if(res.geoResponse.totalResultsCount==0){
+            alert("Place not found");
+            return;
+        }
+        updateUI(res, departDateInput, returnDateInput);
     })
 }
 
@@ -48,19 +59,19 @@ const sendDataToServer = async (url = '', data = {}) => {
 }
 
 // Function to update result to UI
-const updateUI = async(data,departDate)=>{
+const updateUI = async(data,departDate, returnDate)=>{
     try{
-        document.getElementById('output-destination').innerHTML = `${data.geoResponse.geonames[0].name}`;
-        document.getElementById('output-country').innerHTML = `${data.geoResponse.geonames[0].countryName}`;
-        document.getElementById('output-depart-date').innerHTML = `${formatDate(departDate)}`
+        document.getElementById('output-destination').innerHTML = `Your trip to: ${data.geoResponse.geonames[0].name}, ${data.geoResponse.geonames[0].countryName}`;
+        document.getElementById('output-depart-date').innerHTML = `Departing: ${formatDate(departDate)}`
+        document.getElementById('output-trip-remain').innerHTML = `${data.geoResponse.geonames[0].name}, ${data.geoResponse.geonames[0].countryName} is ${getRemainDays(departDate)} days away`;
+        document.getElementById('output-trip-duration').innerHTML = `The trip take ${getDiffDays(departDate, returnDate)} days duration`
         if(getRemainDays(departDate) > 15){
-            console.log(`ua aloooooo`);
             document.getElementById('weather-forecast').innerHTML = 'Weather forcast is only available within next 15 days from today';
         }else{
             const departDateForecast = data.weatherResponse.data.find(x => x.datetime == formatDate(departDate));
             document.getElementById('weather-forecast').innerHTML = `
-                <div class="high-temp">${departDateForecast.high_temp}</div>
-                <div class="low-temp">${departDateForecast.low_temp}</div>
+                <div>Typical weather for then is:</div>
+                <div class="temperature">High: ${departDateForecast.high_temp}, Low: ${departDateForecast.low_temp}</div>
                 <div class="description">${departDateForecast.weather.description}</div>
             `
         }

@@ -6,75 +6,105 @@ body{
 header{
     display: grid;
     background-color: #f0d43a;
-    height: 15dvh;
+    height: 10dvh;
     font-size: 40px;
     font-family: 'Oswald', sans-serif;
+    justify-content: center;
 }
 
-section{
+section {
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
+    // grid-auto-rows: minmax(150px, auto);
     /* grid-template-columns:  */
-    height:50vh;
+    height: 15vh;
     background: #f23557;
     color: #f0d43a;
     justify-content: center;
-    grid-gap: 1em;
+    grid-gap: 10px;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
-}
 
-.holder{
-
-}
-
+    .input-form {
+        display: inline-block;
+        height: 150px;
+    }
+    #inputOnly{
+        display: inline;
+        .destination-holder{
+            display: inline-block;
+        }
+        .departDate-holder{
+            display: inline-block;
+        }
+        .returnDate-holder{
+            display: inline-block;
+        }
+    }
+    #generate{
+        display: inline-block;
+        width: 100%;
+    }
+  }
+  
 .entry{
     background: rgba(59, 74, 107, .4);
 }
 
-#entryHolder{
-
+.header-output{
+    color: #c93cab;
+    font-weight: bolder;
+    font-size:xx-large;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.time-info{
+    color: #4716ce;
+    font-size: x-large;
+    font-family:monospace;
 }
 
-#date{
-
+.info-area{
+    margin-top: 10%;
 }
 
-#temp{
-
+.output-form{
+    display: flex;
+    background-color: white;
+    padding: 10px;
+    border: #0c0b0b;
+    border-width: 5px;
+    height: 70dvh;
 }
 
-#content{
-
+img{
+    height: auto;
+    max-width: 100%;
+    border-radius: 0% 40%;
 }
 
-.headline {
-
+.weather{
+    color:coral;
+    font-size: x-large;
 }
-.title{
-
-}
-
 /*  Basic Styling To Override Default For Basic HTML Elements */
 label{
     display:block;
-    font-size: 27px;
+    font-size: 20px;
 }
 
 input{
     display:block;
-    height: 60px;
-    width: 320px;
+    height: 45px;
+    width: 300px;
     background:#22b2da;
     color: #f0d43a;
-    font-size: 20px;
+    font-size: 17px;
     font-family: 'Oswald', sans-serif;
     border: none;
 }
 
 button{
     width: 400px;
-    height: 100px;
+    height: 45px;
     background: #4171da;
     color: #f0d43a;
     font-size: 26px;
@@ -83,6 +113,10 @@ button{
     box-shadow: 2px 4px 5px #444;
     &:hover{
         background: #183062;
+    }
+
+    #generate{
+        display: inline-block;
     }
 }
 
@@ -121,3 +155,8 @@ button:focus {
     font-family: 'Oswald', sans-serif;
 
 } 
+
+.footer-wrapper{
+    display: grid;
+    justify-content: center;
+}
