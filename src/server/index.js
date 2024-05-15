@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.static('dist'));
 
 // Setup Server
-const port = process.env.PORT;
+const port = process.env.PORT || 8080;
 const geoUserName = process.env.GEO_USERNAME;
 const weatherKey = process.env.WEATHER_KEY;
 const pixaKey = process.env.PIXA_KEY
