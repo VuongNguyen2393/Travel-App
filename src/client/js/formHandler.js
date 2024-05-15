@@ -4,7 +4,9 @@ const { isPastDay, getRemainDays, formatDate, getDiffDays } = require("./dateHan
 const serverURL = 'http://localhost:8080';
 
 const generateButton = document.getElementById('generate');
-generateButton.addEventListener('click',handleCreateTrip);
+if(generateButton){
+    generateButton.addEventListener('click',handleCreateTrip);
+}
 
 async function handleCreateTrip(event){
     event.preventDefault();
@@ -87,3 +89,5 @@ const insertImage = (imageUrl)=>{
     imgElement.src = imageUrl;
     imgElement.style.width = 150;
 }
+
+export{handleCreateTrip, sendDataToServer, updateUI}
